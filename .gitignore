@@ -23,4 +23,4 @@ Thumbs.db
 # Environment files
 .env
 .zig-cache
-.zig-out
+zig-out
