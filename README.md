@@ -33,9 +33,7 @@ The simulator employs a **fully event-driven architecture** in which all protoco
 3. **ISP-to-ISP Transmission**  
    - Packet traverses inter-ISP hops until destination ISP is reached.  
    - Shortest paths precomputed with **Floyd–Warshall**.  
-   - Each hop incurs either:  
-     - Constant latency, or  
-     - Distance-proportional delay.  
+   - Each hop incurs either constant latency or distance-proportional delay.  
    - If destination ISP reached → event becomes ISP-to-local-node delivery.  
 
 4. **ISP-to-Local-Node Delivery**  
@@ -61,9 +59,9 @@ The simulator employs a **fully event-driven architecture** in which all protoco
 ```mermaid
 flowchart TD
     A[Client] -->|LocalToIsp| B[Client ISP]
-    B -->|IspToIsp δ1| C[Entry Relay ISP]
-    C -->|IspToLocal δ2| D[Entry Relay]
-    D -->|LocalToIsp δ3| E[Entry Relay ISP]
+    B -->|IspToIsp d1| C[Entry Relay ISP]
+    C -->|IspToLocal d2| D[Entry Relay]
+    D -->|LocalToIsp d3| E[Entry Relay ISP]
     E -->|IspToIsp| F[Middle Relay ISP]
     F -->|IspToLocal| G[Middle Relay]
     G -->|LocalToIsp| H[Middle Relay ISP]
@@ -72,7 +70,6 @@ flowchart TD
     J -->|LocalToIsp| K[Exit Relay ISP]
     K -->|IspToIsp| L[Server ISP]
     L -->|IspToLocal| M[Server]
-
 === Simulator Usage ===
 
 Required arguments:
@@ -100,6 +97,23 @@ Optional throughput overrides (default = 2000.0):
   throughputServer=<float>
   throughputAnonymousService=<float>
 
-Example:
-  ./simulator clients=1000 anonymousServices=500 entryRelays=400 middleRelays=400 exitRelays=400 servers=200 attackType=relay \
-              userRequestProbability=0.05 probabilityToMakeRequestToAnAnonymousService=0.5 makeASingleRequest=1 useWeighted=1
+
+## Build & Run
+
+### Prerequisites
+- **Zig** installed (0.11+ recommended).
+zig build -Doptimize=ReleaseFast
+zig-out/bin/test \
+  clients=1000 \
+  anonymousServices=500 \
+  entryRelays=1500 \
+  middleRelays=1500 \
+  exitRelays=1500 \
+  servers=500 \
+  attackType=relay \
+  userRequestProbability=0.1 \
+  probabilityToMakeRequestToAnAnonymousService=0.5 \
+  makeASingleRequest=1 \
+  useWeighted=0 \
+  throughputClient=1500 \
+  constantDistanceOverhead=2
