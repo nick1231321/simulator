@@ -1,8 +1,19 @@
 //includes
-
+#pragma once
 #include <cstdint>
 #include <cstddef>
+#include <iostream>
 
+
+inline void crash(std::string_view message) {
+    std::cout << message << "\n";
+    exit(EXIT_FAILURE);
+}
+inline void assertWithMessage(bool i, std::string_view message) {
+    if (!i) {
+        crash(message);
+    }
+}
 
 // Primary template declaration - left undefined intentionally.
 template<typename T>
@@ -54,3 +65,7 @@ using u64 = uint64_t;
 
 using isize = ptrdiff_t;
 using usize = size_t;
+
+// Float aliases
+using f32 = float;
+using f64 = double;

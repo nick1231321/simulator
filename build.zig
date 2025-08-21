@@ -23,6 +23,7 @@ pub fn build(b: *std.Build) void {
             "-std=c++20", // C++ standard
             "-Wall", // Enable all warnings
             "-Wextra", // Extra warnings
+            "-Iinclude", //Include the include dir for header files
         },
     });
 
