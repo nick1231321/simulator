@@ -70,6 +70,7 @@ flowchart TD
     J -->|LocalToIsp| K[Exit Relay ISP]
     K -->|IspToIsp| L[Server ISP]
     L -->|IspToLocal| M[Server]
+
 === Simulator Usage ===
 
 Required arguments:
@@ -97,12 +98,22 @@ Optional throughput overrides (default = 2000.0):
   throughputServer=<float>
   throughputAnonymousService=<float>
 
+Example:
+  ./simulator clients=1000 anonymousServices=500 entryRelays=400 middleRelays=400 exitRelays=400 servers=200 attackType=relay \
+              userRequestProbability=0.05 probabilityToMakeRequestToAnAnonymousService=0.5 makeASingleRequest=1 useWeighted=1
 
-## Build & Run
 
-### Prerequisites
-- **Zig** installed (0.11+ recommended).
+Build & Run
+Prerequisites
+
+Zig installed (0.11+ recommended).
+
+Default target is macOS. To change architecture/OS, edit build.zig.
+
+Build (ReleaseFast)
 zig build -Doptimize=ReleaseFast
+
+Run (example)
 zig-out/bin/test \
   clients=1000 \
   anonymousServices=500 \
